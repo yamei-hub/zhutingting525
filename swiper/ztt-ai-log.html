@@ -55,11 +55,6 @@
   .ztt-verify .ztt-bad{color:#dc2626}
   .ztt-verify .ztt-good{color:#15803d}
 
-  /* 答辩预答块 */
-  .ztt-defense{background:#fffbea;border:1px solid #fde68a;border-radius:12px;padding:14px 18px;margin:12px 0 4px;font-size:13.5px;color:#7c5e10;line-height:2.1}
-  .ztt-defense h3{font-size:14.5px;color:#b45309;margin-bottom:6px}
-  .ztt-defense b{color:#b45309}
-
   .ztt-back{text-align:center;margin-top:28px}
   .ztt-back a{display:inline-block;text-decoration:none;color:#0f2b5b;font-size:14.5px;font-weight:bold;background:#fff;border:1px solid #dbe4ff;border-radius:999px;padding:10px 26px;transition:transform .2s,box-shadow .2s}
   .ztt-back a:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(15,43,91,.15)}
@@ -150,16 +145,6 @@ loop 负责首尾无缝衔接；disableOnInteraction: false 表示用户交互�
       拖动松手后 3.2 秒内恢复自动翻页 <span class="ztt-good">✅</span>；点圆点直接跳转 <span class="ztt-good">✅</span>；最后一张继续往后翻无缝回到第一张 <span class="ztt-good">✅</span>；cube 正常 <span class="ztt-good">✅</span>。<br>
       <b>一句话结论：</b>4 条需求全部实测通过，配置已用在演示四里（初始效果就是 cube，点其它按钮可换效果）。
     </div>
-
-    <div class="ztt-defense">
-      <h3>🎤 答辩抽问 · 预答</h3>
-      <b>Q：第一版提示词漏掉了哪个需求？</b><br>
-      A：漏了无缝循环、手动操作后不停止、圆点可点击这 3 条。因为我第一版只写了"自动播放、带圆点、cube 效果"这几个词，没有把"体验行为"翻译成参数，AI 就按字面只给了 3 条配置。<br>
-      <b>Q：第二轮是怎么说清楚的？</b><br>
-      A：把每条需求写成"Swiper 参数名 + 取值 + 触发条件"的形式，例如"手动拖动之后自动播放不能停止 → disableOnInteraction: false"，而不是说"要好用一点"这种模糊形容词；并且逐条编号，让 AI 无法合并遗漏。<br>
-      <b>Q：AI 第一次给的代码错在哪？</b><br>
-      A：不是语法错，是<b>配置缺项</b>：autoplay 默认交互即停、pagination 默认不可点、没有 loop。这类错误不报错、不崩溃，页面"看起来能用"，必须逐条实测才能暴露。
-    </div>
   </div>
 
   <!-- ═══════════ 任务二 ═══════════ -->
@@ -215,14 +200,6 @@ loop 负责首尾无缝衔接；disableOnInteraction: false 表示用户交互�
       <h3>🧪 验证</h3>
       点击第 7 个按钮「creative 电影墙」<span class="ztt-good">✅ 通过</span>：上一张缩小左移左倾、下一张从右侧放大迎进，拖动时插值过渡自然，就是"选片墙"的感觉；把 rotate 改成 20 后两侧卡片倾角明显变大 <span class="ztt-good">✅</span>。<br>
       <b>一句话结论：</b>creative 效果 = 我自己定义"上一张的去向"和"下一张的来路"，Swiper 负责按进度插值。
-    </div>
-
-    <div class="ztt-defense">
-      <h3>🎤 答辩抽问 · 预答</h3>
-      <b>Q：transform 里的百分号是相对谁的？</b><br>
-      A：相对每个 slide <b>自身</b>的尺寸——水平分量相对 slide 自己的宽度，垂直分量相对自己的高度；和容器无关，所以每张图的位移量是"按自己的宽度打八五折"这样算的。<br>
-      <b>Q：改一个数值让卡片转 20 度？</b><br>
-      A：rotate 数组第三个值就是 2D 旋转角（度），把 ±12 改成 ±20 即可，已在页面试过（演示四 → creative 按钮对应的源码注释里也写明了）。
     </div>
   </div>
 
@@ -334,18 +311,6 @@ var zttMain = new Swiper('#zttMain', {
       </div>
     </div>
     <div class="ztt-verify">🧪 <b>验证：</b>点第 2 张缩略图，主图跳到第 2 张、缩略图同步点亮 <span class="ztt-good">✅</span>；点主图下一张，缩略图自动点亮到对应那张 <span class="ztt-good">✅</span>；读数显示"当前主图 / 点亮缩略图 / 已同步" <span class="ztt-good">✅</span>；主图两侧卡片以 55° 倾斜堆叠、纵深明显 <span class="ztt-good">✅</span>。<br><b>一句话结论：</b>thumbs 联动 = 两个独立实例用 <code>thumbs: { swiper: 实例 }</code> 绑在一起，顺序先缩略图后主图，传对象不传字符串；主图套 coverflow，<code>rotate: 55</code> + <code>depth: 260</code> 把旋转效果做明显。</div>
-
-    <div class="ztt-defense">
-      <h3>🎤 答辩四连 · 预答</h3>
-      <b>Q1：这段代码什么意思？</b><br>
-      A：<code>keyboard.enabled: true</code> 开启方向键控制；<code>onlyInViewport: true</code> 限制只有轮播在视口内才响应按键，防止在页面其它位置按方向键滚动时误切图；它和原有 loop / autoplay 并不冲突，键盘翻一页后自动播放照常继续。<br>
-      <b>Q2：AI 第一次答的哪里不对？你改了什么？</b><br>
-      A：AI 按 npm 工程的按需引入写法给了 import { Keyboard } + modules: [Keyboard]，但我用的是 script 引入的全量 bundle 文件，这套写法直接 ReferenceError。改法：删掉 import 和 modules 数组，只保留 keyboard 配置；同时补上 AI 第一版没给的 onlyInViewport: true；魔都号标题错字"魔都船"订正为"魔都号"，外链图换成本地 AI 生图。<br>
-      <b>Q3：新参数的作用？</b><br>
-      A：delay 3200 = 每张停留 3.2 秒；disableOnInteraction: false = 手动操作后自动播放不停止；clickable: true = 圆点可点击跳转；keyboard.onlyInViewport = 防误触发；speed 800 = 翻页动画时长（和 delay 是两回事）；creativeEffect.prev/next = 定义前后卡片的位移、旋转、缩放、透明度。<br>
-      <b>Q4：现场把 delay 改成指定值并解释预期变化？</b><br>
-      A：比如改成 <code>delay: 1000</code> → 每张只停 1 秒，翻页节奏明显变快；改成 <code>delay: 8000</code> → 停 8 秒，近乎静止后突然翻页。delay 只管"停留多久"，翻页动画快慢由 speed 控制，改 delay 不会影响动画时长；因为 disableOnInteraction: false，手动切换后仍按新 delay 继续自动播放。
-    </div>
   </div>
 
   <div class="ztt-back">

@@ -67,12 +67,6 @@
   .ztt-param code{background:#0f172a;color:#e2e8f0;padding:2px 9px;border-radius:6px;font-family:Consolas,monospace;font-size:12.5px;flex:none}
   .ztt-param .ztt-mean{color:#374151}
 
-  /* 答辩要点横条 */
-  .ztt-points{background:#fffbea;border:1px solid #fde68a;border-radius:14px;padding:18px 22px;margin-top:22px}
-  .ztt-points h3{font-size:15px;color:#b45309;margin-bottom:8px}
-  .ztt-points ul{margin:0 0 0 18px;font-size:13.5px;color:#7c5e10;line-height:2.1}
-  .ztt-points code{background:#fef3c7;color:#92400e;padding:1px 7px;border-radius:5px;font-family:Consolas,monospace;font-size:12.5px}
-
   .ztt-code{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:12px;overflow-x:auto;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.9;margin-top:16px;white-space:pre}
 
   .ztt-back{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px}
@@ -165,16 +159,6 @@
         <div class="ztt-param"><code>scale: 1.05</code><span class="ztt-mean">放大到自身尺寸的 1.05 倍。</span></div>
         <div class="ztt-param"><code>opacity: 0.55</code><span class="ztt-mean">进场前半透明，靠近中心再变实。</span></div>
       </div>
-    </div>
-
-    <div class="ztt-points">
-      <h3>🎤 答辩要点（老师抽问就答这几条）</h3>
-      <ul>
-        <li><b>translate 里的百分号相对谁？</b>相对每个 slide <b>自身</b>的尺寸——水平分量相对自己的宽度，垂直分量相对自己的高度，和整个轮播容器无关。</li>
-        <li><b>rotate 三个值各是什么？</b>数组是 <code>[X 轴, Y 轴, Z 轴]</code>；第三个值是 2D 旋转角，单位是度，负值逆时针、正值顺时针。</li>
-        <li><b>想让卡片转 20 度改哪个数？</b>改 rotate 第三个值：prev 改 <code>[0,0,-20]</code>、next 改 <code>[0,0,20]</code>，一左一右对称，倾角立刻变陡。</li>
-        <li><b>creative 原理：</b>Swiper 给每张 slide 算进度值（-1 ~ 1，相对当前激活张的位置），再把 prev / next 定义的变换在这个进度上做插值；我自己定义"上一张去向"和"下一张来路"，Swiper 负责过渡。</li>
-      </ul>
     </div>
 
     <pre class="ztt-code">creativeEffect: {

@@ -64,10 +64,6 @@
   .ztt-note h3{font-size:14.5px;color:#0f2b5b;margin-bottom:6px}
   .ztt-note p{font-size:13.5px;color:#374151;line-height:1.9}
   .ztt-note code{background:#eef2ff;color:#1d4ed8;padding:1px 7px;border-radius:5px;font-family:Consolas,monospace;font-size:12.5px}
-  .ztt-defense{background:#fffbea;border:1px solid #fde68a;border-radius:14px;padding:18px 22px;margin-top:20px}
-  .ztt-defense h3{font-size:15px;color:#b45309;margin-bottom:8px}
-  .ztt-defense ul{margin:0 0 0 18px;font-size:13.5px;color:#7c5e10;line-height:2.1}
-  .ztt-defense code{background:#fef3c7;color:#92400e;padding:1px 7px;border-radius:5px;font-family:Consolas,monospace;font-size:12.5px}
 
   .ztt-code{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:12px;overflow-x:auto;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.9;margin-top:16px;white-space:pre}
 
@@ -163,16 +159,6 @@
         <h3>🎞 方案二：coverflow 大角度旋转</h3>
         <p>主图用 <code>effect: 'coverflow'</code>，<code>centeredSlides: true</code> 让当前张居中、两侧露卡；<code>coverflowEffect.rotate: 55</code> 两侧卡片各转 55°，<code>depth: 260</code> 做出前后纵深，卡片明显斜着堆叠成封面流。</p>
       </div>
-    </div>
-
-    <div class="ztt-defense">
-      <h3>🎤 答辩要点（老师抽问就答这几条）</h3>
-      <ul>
-        <li><b>这段代码什么意思？</b><code>thumbs.swiper</code> 把主图和缩略图实例绑定；<code>slideToClickedSlide: true</code> 点缩略图时把它带到可视区；<code>watchSlidesProgress: true</code> 让缩略图跟随主图进度点亮。</li>
-        <li><b>AI 第一次答的哪里不对？</b>一是把创建顺序说成"先主图后缩略图"，实测绑定为空；二是 <code>thumbs.swiper</code> 让传选择器字符串，实际要传实例对象。两处订正后联动才生效。</li>
-        <li><b>新参数的作用？</b><code>rotate: 55</code> 两侧卡片旋转角；<code>depth: 260</code> 纵深距离；<code>centeredSlides: true</code> 当前张居中；<code>slidesPerView: 'auto'</code> 按 slide 自身宽度排列，两侧卡片才能露出来。</li>
-        <li><b>现场把 delay 改成指定值？</b>本页主图未开自动播放；若加 <code>autoplay.delay</code>，改大则每张停留更久、改小则翻页更快；delay 只管停留时长，翻页动画快慢由 <code>speed</code> 控制。</li>
-      </ul>
     </div>
 
     <pre class="ztt-code">// 先 new 缩略图实例
