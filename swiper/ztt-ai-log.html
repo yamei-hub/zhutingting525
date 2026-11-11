@@ -8,7 +8,7 @@
      说明：本页是 Swiper 进阶作业三个任务的"与 AI 关键对话记录"访问入口：
      任务一 提示词工程师（2 轮迭代提示词 + AI 回答 + 验证结论）
      任务二 creative 仿写（AI 教读 creativeEffect + 答辩追问）
-     任务三 综合创作（第六件作品爱达·魔都号 + keyboard 键盘控制 + 答辩四连）
+     任务三 综合创作（第六件作品爱达·魔都号 + thumbs 联动 + coverflow 大角度旋转 + 答辩四连）
      页面类名统一 ztt_ 前缀 -->
 <link rel="stylesheet" href="swiper/swiper-bundle.min.css">
 <style>
@@ -72,7 +72,7 @@
   <div class="ztt-head">
     <span class="ztt-badge">A I 对 话 记 录 · 提 示 词 访 问 入 口</span>
     <h1>Swiper 进阶三任务 · <b>我与 AI 的关键对话</b></h1>
-    <p>任务一：让 AI 听懂需求（提示词迭代 2 轮 + 验证）；任务二：AI 教我读懂 creative 自定义变换；任务三：第六件作品爱达·魔都号 + keyboard 键盘控制 + thumbs 缩略图联动。<br>
+    <p>任务一：让 AI 听懂需求（提示词迭代 2 轮 + 验证）；任务二：AI 教我读懂 creative 自定义变换；任务三：第六件作品爱达·魔都号 + thumbs 缩略图联动 + coverflow 大角度旋转封面流。<br>
     作者：朱婷婷（24002120525） · 以下记录按对话实际顺序整理，每轮均已在页面上实操验证。</p>
   </div>
 
@@ -229,10 +229,10 @@ loop 负责首尾无缝衔接；disableOnInteraction: false 表示用户交互�
   <div class="ztt-sec">
     <div class="ztt-sec-head">
       <span class="ztt-no">3</span>
-      <h2>任务三 · 综合创作 + 技术答辩<small>第六件作品爱达·魔都号（AI 生图）+ keyboard 键盘控制 + thumbs 缩略图联动</small></h2>
+      <h2>任务三 · 综合创作 + 技术答辩<small>第六件作品爱达·魔都号（AI 生图）+ thumbs 缩略图联动 + coverflow 大角度旋转</small></h2>
     </div>
 
-    <p class="ztt-txt">① 为光影展添加第六件作品<b>爱达·魔都号</b>（首艘国产大型邮轮，2024 年 1 月 1 日从上海吴淞口国际邮轮港开启商业首航），图片由 AI 生成（横版 16:9，文件 <code>swiper-imgs/adora_1.jpg</code>），四个轮播的 slide 结构都补齐；② 附加能力选了 <b>keyboard 键盘控制</b>加到演示四。</p>
+    <p class="ztt-txt">① 为光影展添加第六件作品<b>爱达·魔都号</b>（首艘国产大型邮轮，2024 年 1 月 1 日从上海吴淞口国际邮轮港开启商业首航），图片由 AI 生成（横版 16:9，文件 <code>swiper-imgs/adora_1.jpg</code>），各轮播的 slide 结构都补齐；② 主图与下方缩略图做 <b>thumbs 双向联动</b>，主图用 <b>coverflow 封面流</b>：<code>centeredSlides: true</code> 当前张居中、两侧露卡，<code>coverflowEffect.rotate: 55</code> 两侧卡片各转 55°、<code>depth: 260</code> 做出前后纵深，旋转堆叠最直观；附加能力 <b>keyboard 键盘控制</b>保留在演示台演示四。</p>
 
     <h3 style="font-size:15.5px;color:#0f2b5b;margin:14px 0 4px">💬 关键对话 1：新增第六件作品</h3>
     <div class="ztt-chat">
@@ -321,13 +321,18 @@ enabled: true 开启方向键翻页。</div>
   slideToClickedSlide: true
 });
 var zttMain = new Swiper('#zttMain', {
+  effect: 'coverflow',
+  centeredSlides: true,
+  slidesPerView: 'auto',
+  spaceBetween: 24,
+  coverflowEffect: { rotate: 55, stretch: 0, depth: 260, modifier: 1, slideShadows: true },
   navigation: { nextEl: '#zttMainNext', prevEl: '#zttMainPrev' },
   thumbs: { swiper: zttThumb }
 });</pre>
 <code>slideToClickedSlide: true</code> 保证点哪张缩略图就把它带到可视区；点亮状态读 <code>.swiper-slide-thumb-active</code> 这个类所在的 slide 索引即可。</div>
       </div>
     </div>
-    <div class="ztt-verify">🧪 <b>验证：</b>点第 2 张缩略图，主图跳到第 2 张、缩略图同步点亮 <span class="ztt-good">✅</span>；点主图下一张，缩略图自动点亮到对应那张 <span class="ztt-good">✅</span>；读数显示"当前主图 / 点亮缩略图 / 已同步" <span class="ztt-good">✅</span>。<br><b>一句话结论：</b>thumbs 联动 = 两个独立实例用 <code>thumbs: { swiper: 实例 }</code> 绑在一起，顺序先缩略图后主图，传对象不传字符串。</div>
+    <div class="ztt-verify">🧪 <b>验证：</b>点第 2 张缩略图，主图跳到第 2 张、缩略图同步点亮 <span class="ztt-good">✅</span>；点主图下一张，缩略图自动点亮到对应那张 <span class="ztt-good">✅</span>；读数显示"当前主图 / 点亮缩略图 / 已同步" <span class="ztt-good">✅</span>；主图两侧卡片以 55° 倾斜堆叠、纵深明显 <span class="ztt-good">✅</span>。<br><b>一句话结论：</b>thumbs 联动 = 两个独立实例用 <code>thumbs: { swiper: 实例 }</code> 绑在一起，顺序先缩略图后主图，传对象不传字符串；主图套 coverflow，<code>rotate: 55</code> + <code>depth: 260</code> 把旋转效果做明显。</div>
 
     <div class="ztt-defense">
       <h3>🎤 答辩四连 · 预答</h3>
@@ -343,8 +348,11 @@ var zttMain = new Swiper('#zttMain', {
   </div>
 
   <div class="ztt-back">
-    <a href="../index.html">← 返回课堂实践目录</a>
-    <a href="swiper-task.html" style="margin-left:12px;">← 返回 Swiper 任务页面（看实际效果）</a>
+    <a href="../index.html">← 课堂实践目录</a>
+    <a href="index.html" style="margin-left:12px;">Swiper 模块导航</a>
+    <a href="task1.html" style="margin-left:12px;">任务一</a>
+    <a href="task2.html" style="margin-left:12px;">任务二</a>
+    <a href="task3.html" style="margin-left:12px;">任务三</a>
   </div>
 
   <footer>AI 对话记录 · Swiper 进阶三任务 · 高级网页设计 · 朱婷婷（24002120525）</footer>
