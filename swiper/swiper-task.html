@@ -82,6 +82,44 @@
   .ztt-back a{display:inline-block;text-decoration:none;color:#0f2b5b;font-size:14.5px;font-weight:bold;background:#fff;border:1px solid #dbe4ff;border-radius:999px;padding:10px 26px;transition:transform .2s,box-shadow .2s}
   .ztt-back a:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(15,43,91,.15)}
 
+  /* ═══ 任务一：两轮对照双实例 ═══ */
+  .ztt-compare{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:18px}
+  @media (max-width:760px){.ztt-compare{grid-template-columns:1fr}}
+  .ztt-compare-col{border:1px solid #e8ecf5;border-radius:16px;padding:18px 18px 20px;background:#fbfcff}
+  .ztt-col-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+  .ztt-round{font-size:13px;font-weight:bold;color:#0f2b5b}
+  .ztt-badge-bad{margin-left:auto;font-size:12.5px;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;border-radius:999px;padding:4px 12px}
+  .ztt-badge-good{margin-left:auto;font-size:12.5px;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;padding:4px 12px}
+  .ztt-col-txt{font-size:13.5px;color:#374151;line-height:1.9;margin-bottom:12px}
+  .ztt-col-txt code{background:#eef2ff;color:#1d4ed8;padding:1px 7px;border-radius:5px;font-family:Consolas,monospace;font-size:12.5px}
+  .ztt-readout{font-size:13.5px;color:#374151;margin:12px 2px 10px;line-height:1.8}
+  .ztt-readout b{color:#0f2b5b;font-size:15px}
+  .ztt-bad-txt{color:#dc2626;font-weight:bold;margin-left:6px}
+  .ztt-good-txt{color:#15803d;font-weight:bold;margin-left:6px}
+  .ztt-code{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.8;margin-top:6px;white-space:pre}
+
+  /* 对照表 / 提示词对照 */
+  .ztt-table{width:100%;border-collapse:collapse;margin:16px 0 6px;font-size:13.5px}
+  .ztt-table th,.ztt-table td{border:1px solid #e5eaf3;padding:10px 12px;text-align:left;line-height:1.8;vertical-align:top}
+  .ztt-table th{background:#eef2ff;color:#0f2b5b;font-weight:bold}
+  .ztt-table code{background:#eef2ff;color:#1d4ed8;padding:1px 7px;border-radius:5px;font-family:Consolas,monospace;font-size:12.5px}
+  .ztt-prompt-compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}
+  @media (max-width:760px){.ztt-prompt-compare{grid-template-columns:1fr}}
+  .ztt-prompt-box{border:1px solid #e8ecf5;border-radius:12px;padding:14px 16px;background:#fbfcff}
+  .ztt-prompt-box h4{font-size:14px;color:#0f2b5b;margin-bottom:6px}
+  .ztt-prompt-box p{font-size:13px;color:#374151;line-height:1.9}
+  .ztt-prompt-box ul{margin:6px 0 0 18px;font-size:13px;color:#6b7280;line-height:1.9}
+
+  /* ═══ 任务三：缩略图联动双实例 ═══ */
+  .ztt-gallery{margin-top:18px}
+  .ztt-gallery .ztt-swiper{max-width:820px}
+  .ztt-count{position:absolute;top:14px;right:16px;z-index:2;font-size:13px;color:#fff;background:rgba(15,43,91,.55);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px;letter-spacing:1px}
+  .ztt-thumbs{margin-top:14px;max-width:820px;margin-left:auto;margin-right:auto}
+  .ztt-thumbs .swiper-slide{width:120px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;cursor:pointer;opacity:.5;transition:opacity .2s,outline .2s}
+  .ztt-thumbs .swiper-slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .ztt-thumbs .swiper-slide-thumb-active{opacity:1;outline:2px solid #e8890c;outline-offset:2px}
+  .ztt-gallery-readout{text-align:center;margin-top:16px}
+
   footer{text-align:center;margin-top:34px;color:#9ca3af;font-size:13px;line-height:2}
 </style>
 </head>
@@ -255,6 +293,203 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ═══════════ 评分任务一 · 提示词工程两轮对照（双实例真实点击） ═══════════ -->
+  <div class="ztt-sec" id="zttTask1">
+    <div class="ztt-sec-head">
+      <span class="ztt-no">★1</span>
+      <h2>任务一 · 提示词工程师：同一句需求，两种翻译<small>两个轮播 HTML 完全一样，只差一个 clickable，点圆点看下面读数</small></h2>
+    </div>
+    <p class="ztt-txt">老师要的配置四条：① 无缝循环 ② 3.2 秒自动翻页、手动操作后不停止 ③ 圆点分页器可点击 ④ 初始效果 cube。下面左右两个轮播都在真实运行——左边是第一轮提示词喂出来的，右边是第二轮补齐后的。<b>别听我说，点一下两边的圆点，看那行读数发生了什么。</b></p>
+
+    <div class="ztt-compare">
+      <!-- 左：第 1 轮 · 漏了 clickable -->
+      <div class="ztt-compare-col">
+        <div class="ztt-col-head">
+          <span class="ztt-round">第 1 轮 · 漏了需求</span>
+          <span class="ztt-badge-bad">圆点只能看，不能点</span>
+        </div>
+        <p class="ztt-col-txt">提示词里只写了"圆点分页器"，AI 理解成"把圆点画出来"，于是只给了 <code>el</code>，没给 <code>clickable</code>。圆点在，但点不动。</p>
+        <div class="ztt-swiper">
+          <div class="swiper" id="zttBad">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站">
+                <div class="ztt-cap"><h3>天宫空间站</h3><p>中国自主建造的近地轨道大型空间站</p></div>
+              </div>
+              <div class="swiper-slide">
+                <img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组">
+                <div class="ztt-cap"><h3>复兴号动车组</h3><p>350 km/h · 世界商业运营最高时速</p></div>
+              </div>
+              <div class="swiper-slide">
+                <img src="swiper-imgs/c919_1.jpg" alt="C919 大飞机">
+                <div class="ztt-cap"><h3>C919 大飞机</h3><p>国产干线民用客机 · 翱翔蓝天</p></div>
+              </div>
+              <div class="swiper-slide">
+                <img src="swiper-imgs/fast_1.jpg" alt="中国天眼 FAST">
+                <div class="ztt-cap"><h3>中国天眼 FAST</h3><p>500 米口径球面射电望远镜</p></div>
+              </div>
+            </div>
+            <div class="swiper-pagination" id="zttPagBad"></div>
+          </div>
+        </div>
+        <div class="ztt-readout">点第 3 个圆点 → 当前索引 <b id="zttBadIdx">0</b><span id="zttBadState" class="ztt-bad-txt">没有跳转</span></div>
+        <pre class="ztt-code">pagination: {
+  el: '#zttPagBad'
+}</pre>
+      </div>
+
+      <!-- 右：第 2 轮 · 补齐 clickable -->
+      <div class="ztt-compare-col">
+        <div class="ztt-col-head">
+          <span class="ztt-round">第 2 轮 · 补齐需求</span>
+          <span class="ztt-badge-good">圆点是遥控器，不是装饰</span>
+        </div>
+        <p class="ztt-col-txt">第二轮把需求改写成"圆点必须能<b>点击直接跳转</b>，不是只能看"。同一个 AI，立刻补上了 <code>clickable: true</code>，圆点变成可点的遥控器。</p>
+        <div class="ztt-swiper">
+          <div class="swiper" id="zttGood">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站">
+                <div class="ztt-cap"><h3>天宫空间站</h3><p>中国自主建造的近地轨道大型空间站</p></div>
+              </div>
+              <div class="swiper-slide">
+                <img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组">
+                <div class="ztt-cap"><h3>复兴号动车组</h3><p>350 km/h · 世界商业运营最高时速</p></div>
+              </div>
+              <div class="swiper-slide">
+                <img src="swiper-imgs/c919_1.jpg" alt="C919 大飞机">
+                <div class="ztt-cap"><h3>C919 大飞机</h3><p>国产干线民用客机 · 翱翔蓝天</p></div>
+              </div>
+              <div class="swiper-slide">
+                <img src="swiper-imgs/fast_1.jpg" alt="中国天眼 FAST">
+                <div class="ztt-cap"><h3>中国天眼 FAST</h3><p>500 米口径球面射电望远镜</p></div>
+              </div>
+            </div>
+            <div class="swiper-pagination" id="zttPagGood"></div>
+          </div>
+        </div>
+        <div class="ztt-readout">点第 3 个圆点 → 当前索引 <b id="zttGoodIdx">0</b><span id="zttGoodState" class="ztt-good-txt">可跳转</span></div>
+        <pre class="ztt-code">pagination: {
+  el: '#zttPagGood',
+  clickable: true
+}</pre>
+      </div>
+    </div>
+
+    <h3 style="font-size:15.5px;color:#0f2b5b;margin:22px 0 4px">📋 需求 → 参数 对照（两条轮播其余配置完全相同）</h3>
+    <table class="ztt-table">
+      <tr><th>老师提的需求</th><th>对应参数</th><th>第 1 轮 AI 给了吗</th><th>第 2 轮补齐后</th></tr>
+      <tr><td>① 无缝循环</td><td><code>loop: true</code></td><td>❌ 漏了，拖到最后一张顶死</td><td>✅ 首尾无缝衔接</td></tr>
+      <tr><td>② 3.2 秒自动翻页，手动后不停</td><td><code>autoplay: { delay: 3200, disableOnInteraction: false }</code></td><td>❌ 只给 delay，交互后自动停止</td><td>✅ 拖动松手后继续自动翻</td></tr>
+      <tr><td>③ 圆点分页器可点击</td><td><code>pagination: { el, clickable: true }</code></td><td>❌ 只给 el，圆点不可点</td><td>✅ 点圆点直接跳转</td></tr>
+      <tr><td>④ 初始效果 cube</td><td><code>effect: 'cube'</code></td><td>✅ 给了</td><td>✅ 保留</td></tr>
+    </table>
+
+    <div class="ztt-prompt-compare">
+      <div class="ztt-prompt-box">
+        <h4>🔁 第 1 轮提示词原文（漏项）</h4>
+        <p>"帮我用 Swiper 写一个轮播初始化配置：<code>new Swiper('#wySw4', {...})</code>，要求能自动播放，每 3.2 秒翻一页，带圆点分页器，初始切换效果是 cube。"</p>
+        <ul>
+          <li>只写了名词（圆点、自动播放），没写行为（可点击、手动后不停、循环）</li>
+          <li>AI 按字面给了 3 条，漏 3 条体验类需求，控制台不报错</li>
+        </ul>
+      </div>
+      <div class="ztt-prompt-box">
+        <h4>🔁 第 2 轮提示词原文（逐条说清）</h4>
+        <p>"实测有 3 个问题，请补全：① 要无缝循环，加 <code>loop: true</code>；② 手动拖动、点圆点后自动播放不能停止，autoplay 加 <code>disableOnInteraction: false</code>；③ 圆点要能点击直接跳转，pagination 加 <code>clickable: true</code>。其它保持不变。"</p>
+        <ul>
+          <li>每条写成"参数名 + 取值 + 触发条件"，编号列出</li>
+          <li>AI 一次补齐 4 条，逐条实测通过</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 评分任务三 · 缩略图联动双实例 ═══════════ -->
+  <div class="ztt-sec" id="zttTask3">
+    <div class="ztt-sec-head">
+      <span class="ztt-no">★3</span>
+      <h2>任务三 · 综合创作：两个轮播，绑成一套<small>thumbs 缩略图联动 · 主图 ⇄ 缩略图双向同步（含第六件爱达·魔都号）</small></h2>
+    </div>
+    <p class="ztt-txt">用 <code>thumbs</code> 把两个互不相干的 Swiper 实例绑起来：上面是主图，下面是一条缩略图。点下面任意一张，上面立刻跟着跳；主图翻页，缩略图也自动点亮对应那张。它们不是同一个实例，但索引被绑在一起。第六件展品是 AI 生成的<b>爱达·魔都号</b>。</p>
+
+    <div class="ztt-gallery">
+      <div class="ztt-swiper">
+        <div class="swiper" id="zttMain">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <span class="ztt-count">01 / 06</span>
+              <img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站">
+              <div class="ztt-cap"><h3>天宫空间站</h3><p>中国自主建造的近地轨道大型空间站</p></div>
+            </div>
+            <div class="swiper-slide">
+              <span class="ztt-count">02 / 06</span>
+              <img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组">
+              <div class="ztt-cap"><h3>复兴号动车组</h3><p>350 km/h · 世界商业运营最高时速</p></div>
+            </div>
+            <div class="swiper-slide">
+              <span class="ztt-count">03 / 06</span>
+              <img src="swiper-imgs/c919_1.jpg" alt="C919 大飞机">
+              <div class="ztt-cap"><h3>C919 大飞机</h3><p>国产干线民用客机 · 翱翔蓝天</p></div>
+            </div>
+            <div class="swiper-slide">
+              <span class="ztt-count">04 / 06</span>
+              <img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号">
+              <div class="ztt-cap"><h3>奋斗者号</h3><p>万米载人深潜 · 抵达地球最深处</p></div>
+            </div>
+            <div class="swiper-slide">
+              <span class="ztt-count">05 / 06</span>
+              <img src="swiper-imgs/fast_1.jpg" alt="中国天眼 FAST">
+              <div class="ztt-cap"><h3>中国天眼 FAST</h3><p>500 米口径球面射电望远镜</p></div>
+            </div>
+            <div class="swiper-slide">
+              <span class="ztt-count">06 / 06</span>
+              <img src="swiper-imgs/adora_1.jpg" alt="爱达·魔都号">
+              <div class="ztt-cap"><h3>爱达·魔都号</h3><p>2024 年 1 月首航 · 国产大型邮轮（AI 生成）</p></div>
+            </div>
+          </div>
+          <div class="swiper-button-prev" id="zttMainPrev"></div>
+          <div class="swiper-button-next" id="zttMainNext"></div>
+        </div>
+      </div>
+
+      <div class="swiper ztt-thumbs" id="zttThumbs">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"></div>
+          <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组"></div>
+          <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919 大飞机"></div>
+          <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"></div>
+          <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼 FAST"></div>
+          <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达·魔都号"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ztt-readout ztt-gallery-readout">
+      当前主图 <b id="zttMainIdx">0</b> · 点亮缩略图 <b id="zttThumbIdx">0</b> · <span id="zttSyncState" class="ztt-good-txt">已同步</span> · 当前模式：标准跟随（主图 ⇄ 缩略图）
+    </div>
+
+    <h3 style="font-size:15.5px;color:#0f2b5b;margin:20px 0 4px">🔗 绑定原理（先 new 缩略图，再 new 主图）</h3>
+    <pre class="ztt-code">var zttThumb = new Swiper('#zttThumbs', {
+  spaceBetween: 8,
+  slidesPerView: 'auto',
+  freeMode: true,
+  watchSlidesProgress: true,
+  slideToClickedSlide: true
+});
+var zttMain = new Swiper('#zttMain', {
+  navigation: { nextEl: '#zttMainNext', prevEl: '#zttMainPrev' },
+  thumbs: { swiper: zttThumb }   // 传实例对象，不是选择器字符串
+});</pre>
+
+    <table class="ztt-table">
+      <tr><th>跟随方式</th><th>关键参数</th><th>效果</th></tr>
+      <tr><td>标准跟随（本页采用）</td><td><code>thumbs: { swiper: zttThumb }</code></td><td>主图翻页点亮缩略图，点缩略图主图跳转，双向同步</td></tr>
+      <tr><td>缩略图自由滑动</td><td><code>freeMode: true</code></td><td>缩略图条可随手拖动，不强制吸附到某一张</td></tr>
+      <tr><td>偏移跟随</td><td><code>thumbs.autoScrollOffset: 1</code></td><td>激活缩略图左右各预留一张，滚动时提前把目标图带到可视区</td></tr>
+    </table>
   </div>
 
   <div class="ztt-back">
@@ -435,6 +670,102 @@
       ztt_sw4 = new Swiper('#wySw4', ztt_getSw4Options(ztt_fx));
     });
   });
+
+
+  // ══════════════════════════════════════════════════════════
+  //  任务一 · 两轮对照双实例：HTML 完全一样，只差一个 clickable
+  // ══════════════════════════════════════════════════════════
+  // 左：第 1 轮 · 只给 el，圆点只能看、不能点
+  var ztt_bad = new Swiper('#zttBad', {
+    loop: true,
+    speed: 800,
+    autoplay: { delay: 3200, disableOnInteraction: false },
+    pagination: { el: '#zttPagBad' },
+    effect: 'cube',
+    cubeEffect: { shadow: true, slideShadows: true }
+  });
+  // 实例化完成后再绑事件，回调里用 this 指向实例，避免构造期变量未赋值
+  ztt_bad.on('slideChange', function(){
+    document.getElementById('zttBadIdx').textContent = this.realIndex;
+  });
+
+  // 右：第 2 轮 · 补齐 clickable: true，圆点是可点的遥控器
+  var ztt_good = new Swiper('#zttGood', {
+    loop: true,
+    speed: 800,
+    autoplay: { delay: 3200, disableOnInteraction: false },
+    pagination: { el: '#zttPagGood', clickable: true },
+    effect: 'cube',
+    cubeEffect: { shadow: true, slideShadows: true }
+  });
+  ztt_good.on('slideChange', function(){
+    document.getElementById('zttGoodIdx').textContent = this.realIndex;
+    var g = document.getElementById('zttGoodState');
+    g.textContent = '已跳转';
+    g.className = 'ztt-good-txt';
+  });
+
+  // 点击圆点后比对点击前后索引：变了才算跳转，没变就是"只能看"
+  function ztt_bindPaginationProbe(swiper, pagEl, idxId, stateId, canClick){
+    var pag = document.querySelector(pagEl);
+    if(!pag) return;
+    pag.addEventListener('click', function(){
+      var before = swiper.realIndex;
+      setTimeout(function(){
+        var after = swiper.realIndex;
+        document.getElementById(idxId).textContent = after;
+        var state = document.getElementById(stateId);
+        if(after !== before){
+          state.textContent = '已跳转';
+          state.className = 'ztt-good-txt';
+        } else {
+          state.textContent = canClick ? '可跳转' : '没有跳转';
+          state.className = canClick ? 'ztt-good-txt' : 'ztt-bad-txt';
+        }
+      }, 350);
+    });
+  }
+  ztt_bindPaginationProbe(ztt_bad,  '#zttPagBad',  'zttBadIdx',  'zttBadState',  false);
+  ztt_bindPaginationProbe(ztt_good, '#zttPagGood', 'zttGoodIdx', 'zttGoodState', true);
+
+
+  // ══════════════════════════════════════════════════════════
+  //  任务三 · 缩略图联动双实例：先 new 缩略图，再 new 主图
+  // ══════════════════════════════════════════════════════════
+  var ztt_thumb = new Swiper('#zttThumbs', {
+    spaceBetween: 8,
+    slidesPerView: 'auto',
+    freeMode: true,
+    watchSlidesProgress: true,
+    slideToClickedSlide: true
+  });
+  var ztt_main = new Swiper('#zttMain', {
+    navigation: { prevEl: '#zttMainPrev', nextEl: '#zttMainNext' },
+    thumbs: { swiper: ztt_thumb }   // 传实例对象，不是选择器字符串
+  });
+
+  function ztt_syncReadout(){
+    if(!ztt_main || !ztt_thumb) return;
+    var mi = ztt_main.activeIndex;
+    // 点亮状态由 thumbs 模块写在 .swiper-slide-thumb-active 类上，读它的索引
+    var activeThumb = ztt_thumb.wrapperEl.querySelector('.swiper-slide-thumb-active');
+    var ti = activeThumb
+      ? Array.prototype.indexOf.call(ztt_thumb.slides, activeThumb)
+      : ztt_thumb.activeIndex;
+    document.getElementById('zttMainIdx').textContent = mi;
+    document.getElementById('zttThumbIdx').textContent = ti;
+    var state = document.getElementById('zttSyncState');
+    if(mi === ti){
+      state.textContent = '已同步';
+      state.className = 'ztt-good-txt';
+    } else {
+      state.textContent = '同步中…';
+      state.className = 'ztt-bad-txt';
+    }
+  }
+  ztt_main.on('slideChange', ztt_syncReadout);
+  ztt_thumb.on('slideChange', ztt_syncReadout);
+  ztt_syncReadout();
 </script>
 </body>
 </html>

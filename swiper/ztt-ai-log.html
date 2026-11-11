@@ -72,7 +72,7 @@
   <div class="ztt-head">
     <span class="ztt-badge">A I 对 话 记 录 · 提 示 词 访 问 入 口</span>
     <h1>Swiper 进阶三任务 · <b>我与 AI 的关键对话</b></h1>
-    <p>任务一：让 AI 听懂需求（提示词迭代 2 轮 + 验证）；任务二：AI 教我读懂 creative 自定义变换；任务三：第六件作品爱达·魔都号 + keyboard 键盘控制。<br>
+    <p>任务一：让 AI 听懂需求（提示词迭代 2 轮 + 验证）；任务二：AI 教我读懂 creative 自定义变换；任务三：第六件作品爱达·魔都号 + keyboard 键盘控制 + thumbs 缩略图联动。<br>
     作者：朱婷婷（24002120525） · 以下记录按对话实际顺序整理，每轮均已在页面上实操验证。</p>
   </div>
 
@@ -229,7 +229,7 @@ loop 负责首尾无缝衔接；disableOnInteraction: false 表示用户交互�
   <div class="ztt-sec">
     <div class="ztt-sec-head">
       <span class="ztt-no">3</span>
-      <h2>任务三 · 综合创作 + 技术答辩<small>第六件作品爱达·魔都号（AI 生图）+ keyboard 键盘控制</small></h2>
+      <h2>任务三 · 综合创作 + 技术答辩<small>第六件作品爱达·魔都号（AI 生图）+ keyboard 键盘控制 + thumbs 缩略图联动</small></h2>
     </div>
 
     <p class="ztt-txt">① 为光影展添加第六件作品<b>爱达·魔都号</b>（首艘国产大型邮轮，2024 年 1 月 1 日从上海吴淞口国际邮轮港开启商业首航），图片由 AI 生成（横版 16:9，文件 <code>swiper-imgs/adora_1.jpg</code>），四个轮播的 slide 结构都补齐；② 附加能力选了 <b>keyboard 键盘控制</b>加到演示四。</p>
@@ -293,6 +293,41 @@ enabled: true 开启方向键翻页。</div>
     </div>
 
     <div class="ztt-verify">🧪 <b>验证：</b>去掉 import / modules 后无报错；页面滚动到演示四可见时按 ← → 能翻页 <span class="ztt-good">✅</span>，滚到页面顶部时按方向键只滚动页面、轮播不动 <span class="ztt-good">✅</span>。<br><b>一句话结论：</b>bundle 全量版 = 模块全内置，只写 keyboard 参数；AI 第一版错在按 npm 按需引入的语境作答，没先确认我的引入方式。</div>
+
+    <h3 style="font-size:15.5px;color:#0f2b5b;margin:14px 0 4px">💬 关键对话 3：thumbs 缩略图联动（主图 ⇄ 缩略图双向同步）</h3>
+    <div class="ztt-chat">
+      <div class="ztt-msg ztt-me">
+        <span class="ztt-role">我（提示词）</span>
+        <div class="ztt-bubble">我想在页面上再做一个画廊：上面一张主图，下面一条缩略图。<b>点任意一张缩略图，主图立刻跟着跳；主图翻页时，对应缩略图自动点亮</b>。还是本地 <code>swiper-bundle.min.js</code> 全量引入。请给两个 Swiper 实例的配置，并说明两个实例的创建顺序。</div>
+      </div>
+      <div class="ztt-msg ztt-ai">
+        <span class="ztt-role">AI（回答 1 —— 有瑕疵）</span>
+        <div class="ztt-bubble">用 thumbs 模块：先 new 主图，再 new 缩略图，主图配置里写 <code>thumbs: { swiper: '#zttThumbs' }</code> 指向缩略图选择器；缩略图条配 <code>spaceBetween</code>、<code>slidesPerView: 'auto'</code>、<code>watchSlidesProgress: true</code>。激活的缩略图会自动加上 <code>swiper-slide-thumb-active</code> 类。</div>
+      </div>
+      <div class="ztt-msg ztt-me">
+        <span class="ztt-role">我（追问 + 指错）</span>
+        <div class="ztt-bubble">实测联动没生效：主图翻了缩略图不点亮，点缩略图主图也不跳。两个问题——<code>thumbs.swiper</code> 到底该传选择器字符串还是实例对象？创建顺序是不是反了？</div>
+      </div>
+      <div class="ztt-msg ztt-ai">
+        <span class="ztt-role">AI（回答 2 —— 修正）</span>
+        <div class="ztt-bubble">两处都要改：<br>
+        ① <b>先 new 缩略图实例，再 new 主图实例</b>——主图绑定 thumbs 时要拿到已经存在的缩略图实例，顺序反了绑定就是空的；<br>
+        ② <code>thumbs.swiper</code> 传的是<b>实例对象</b>，不是选择器字符串：
+<pre>var zttThumb = new Swiper('#zttThumbs', {
+  spaceBetween: 8,
+  slidesPerView: 'auto',
+  freeMode: true,
+  watchSlidesProgress: true,
+  slideToClickedSlide: true
+});
+var zttMain = new Swiper('#zttMain', {
+  navigation: { nextEl: '#zttMainNext', prevEl: '#zttMainPrev' },
+  thumbs: { swiper: zttThumb }
+});</pre>
+<code>slideToClickedSlide: true</code> 保证点哪张缩略图就把它带到可视区；点亮状态读 <code>.swiper-slide-thumb-active</code> 这个类所在的 slide 索引即可。</div>
+      </div>
+    </div>
+    <div class="ztt-verify">🧪 <b>验证：</b>点第 2 张缩略图，主图跳到第 2 张、缩略图同步点亮 <span class="ztt-good">✅</span>；点主图下一张，缩略图自动点亮到对应那张 <span class="ztt-good">✅</span>；读数显示"当前主图 / 点亮缩略图 / 已同步" <span class="ztt-good">✅</span>。<br><b>一句话结论：</b>thumbs 联动 = 两个独立实例用 <code>thumbs: { swiper: 实例 }</code> 绑在一起，顺序先缩略图后主图，传对象不传字符串。</div>
 
     <div class="ztt-defense">
       <h3>🎤 答辩四连 · 预答</h3>
