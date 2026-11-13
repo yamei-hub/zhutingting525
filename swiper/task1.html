@@ -57,9 +57,10 @@
   .ztt-swiper .swiper-pagination-bullet-active{background:#e8890c;opacity:1;width:22px;border-radius:6px}
 
   /* 两轮对照 */
-  .ztt-compare{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:18px}
-  @media (max-width:760px){.ztt-compare{grid-template-columns:1fr}}
-  .ztt-compare-col{border:1px solid #e8ecf5;border-radius:16px;padding:18px 18px 20px;background:#fbfcff}
+  /* minmax(0,1fr) + min-width:0：防止 Swiper 内部 slides 撑开列宽，导致两列被容器裁掉 */
+  .ztt-compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;margin-top:18px}
+  @media (max-width:760px){.ztt-compare{grid-template-columns:minmax(0,1fr)}}
+  .ztt-compare-col{min-width:0;border:1px solid #e8ecf5;border-radius:16px;padding:18px 18px 20px;background:#fbfcff}
   .ztt-col-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
   .ztt-round{font-size:13px;font-weight:bold;color:#0f2b5b}
   .ztt-badge-bad{margin-left:auto;font-size:12.5px;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;border-radius:999px;padding:4px 12px}
@@ -252,11 +253,9 @@
     effect: 'cube',
     cubeEffect: { shadow: true, slideShadows: true }
   });
+  // 只更新索引；"已跳转"必须由下面点击探针判定，避免 autoplay 自动翻页误标为已跳转
   ztt_good.on('slideChange', function(){
     document.getElementById('zttGoodIdx').textContent = this.realIndex;
-    var g = document.getElementById('zttGoodState');
-    g.textContent = '已跳转';
-    g.className = 'ztt-good-txt';
   });
 
   // 点击圆点后比对点击前后索引：变了才算跳转，没变就是"只能看"
